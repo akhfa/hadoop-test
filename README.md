@@ -1,4 +1,4 @@
-# hadoop-test
+# DBLP Parser by Akhmad Fakhoni Listiyan Dede / 13513601
 Repository ini dapat digunakan untuk melakukan perhitungan terhadap file dblp-short.xml. <br>
 
 ## Cara menjalankan
@@ -141,9 +141,6 @@ File pertama, AuthorCounter.java hanya berfungsi untuk melakukan counting pada f
 File kedua, Order.java hanya berfungsi untuk melakukan ordering dari author yang memiliki publikasi paling banyak.<br>
 Hasil kompilasi kedua file tersebut dijalankan dengan script runall.sh
 
-## Known bug
-Entah kenapa ketika digunakan untuk melakukan parse dblp.xml, masih terjadi eror. 
-Padahal seharusnya jika memang dblp-short.xml adalah potongan dari dblp.xml, maka seharusnya berjalan dengan baik.
 
 #### Catatan
 Hanya dapat dijalankan di lingkungan LABTEK V
