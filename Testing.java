@@ -87,6 +87,7 @@ public class Testing extends Configured implements Tool {
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
+    job.setOutputFormatClass(SequenceFileOutputFormat.class);
     //job.setOutputValueGroupingComparator(Class);
     // job.setSortComparatorClass(
     //   CustomIntWritable.DecreasingComparator.class);
