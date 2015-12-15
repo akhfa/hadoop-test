@@ -17,6 +17,9 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
+import org.apache.hadoop.mapreduce.lib.map.*;
+
+import java.util.Random;
 
 public class Testing {
 
@@ -65,6 +68,10 @@ public class Testing {
   }
 
   public static void main(String[] args) throws Exception {
+    Path tempDir =
+        new Path("/user/akhfa/temp-"+
+            Integer.toString(new Random().nextInt(Integer.MAX_VALUE)));
+
     Configuration conf = new Configuration();
     Job job = Job.getInstance(conf, "word count");
     job.setJarByClass(Testing.class);
@@ -74,10 +81,22 @@ public class Testing {
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
     //job.setOutputValueGroupingComparator(Class);
-    job.setSortComparatorClass(
-      CustomIntWritable.DecreasingComparator.class);
+    // job.setSortComparatorClass(
+    //   CustomIntWritable.DecreasingComparator.class);
     FileInputFormat.addInputPath(job, new Path(args[0]));
-    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    FileOutputFormat.setOutputPath(job, tempDir);
     System.exit(job.waitForCompletion(true) ? 0 : 1);
+
+    Job sortJob = new Job(conf);
+    sortJob.setJobName("grep-sort");
+    sortJob.setInputFormatClass(SequenceFileInputFormat.class);
+    sortJob.setMapperClass(InverseMapper.class);
+    sortJob.setNumReduceTasks(1);                 // write a single file
+    FileInputFormat.setInputPaths(sortJob, tempDir);
+    System.out.println(args[1]);
+    FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
+    sortJob.setSortComparatorClass(          // sort by decreasing freq
+      LongWritable.DecreasingComparator.class);
+    sortJob.waitForCompletion(true);
   }
 }
