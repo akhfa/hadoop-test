@@ -22,7 +22,7 @@ import org.apache.hadoop.util.*;
 
 import java.util.Random;
 
-public class Testing extends Configured implements Tool {
+public class AuthorCounter extends Configured implements Tool {
 
   private String inputPath;
 
@@ -81,7 +81,7 @@ public class Testing extends Configured implements Tool {
 
     Configuration conf = new Configuration();
     Job job = Job.getInstance(conf, "word count");
-    job.setJarByClass(Testing.class);
+    job.setJarByClass(AuthorCounter.class);
     job.setMapperClass(TokenizerMapper.class);
     job.setCombinerClass(IntSumReducer.class);
     job.setReducerClass(IntSumReducer.class);
@@ -110,6 +110,6 @@ public class Testing extends Configured implements Tool {
   }
 
   public static void main(String[] args) throws Exception {
-    int res = ToolRunner.run(new Configuration(), new Testing(), args);
+    int res = ToolRunner.run(new Configuration(), new AuthorCounter(), args);
   }
 }
