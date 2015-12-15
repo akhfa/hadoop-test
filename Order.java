@@ -34,7 +34,7 @@ public class Order extends Configured implements Tool {
     sortJob.setInputFormatClass(SequenceFileInputFormat.class);
     sortJob.setMapperClass(InverseMapper.class);
     sortJob.setNumReduceTasks(1);                 // write a single file
-    FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
+    FileOutputFormat.setOutputPath(sortJob, new Path(args[0]));
     sortJob.setSortComparatorClass(          // sort by decreasing freq
       LongWritable.DecreasingComparator.class);
     sortJob.setJarByClass(Order.class);
