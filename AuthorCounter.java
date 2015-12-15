@@ -44,13 +44,19 @@ public class AuthorCounter extends Configured implements Tool {
 
     public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
-        //StringTokenizer itr = new StringTokenizer(value.toString());
-        ArrayList Authors = this.getAllAuthor("dblp-short.xml");
-        for(Object Author : Authors)
+      //StringTokenizer itr = new StringTokenizer(value.toString());
+      String file = value.toString();
+      String [] lines = file.split("\n");
+
+      for(String line : lines)
+      {
+        if(line.contains("author"))
         {
-            word.set(Author.toString());
+            String author = line.substring(8, line.indexOf("</a"));
+            word.set(author);
             context.write(word, one);
         }
+      }
     }
   }
 
