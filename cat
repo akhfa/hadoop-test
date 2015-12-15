@@ -1,0 +1,4 @@
+#!/bin/sh
+# $1 = directory + file yang mau di cat
+# /home/hduser/Application/hadoop-2.7.1/bin/hadoop fs -cat $1 | sort -r -nk 2
+/home/hduser/Application/hadoop-2.7.1/bin/hadoop fs -cat $1

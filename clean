@@ -1,0 +1,5 @@
+#!/bin/sh
+rm authorcounter.jar
+rm order.jar
+./rm /user/akhfa/temp
+./rm /user/akhfa/output

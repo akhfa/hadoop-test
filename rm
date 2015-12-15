@@ -1,0 +1,3 @@
+#!/bin/sh
+# $1 = path yang mau dihapus
+/home/hduser/Application/hadoop-2.7.1/bin/hadoop fs -rm -r $1
