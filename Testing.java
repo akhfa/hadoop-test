@@ -18,10 +18,11 @@ import org.apache.hadoop.conf.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
 import org.apache.hadoop.mapreduce.lib.map.*;
+import org.apache.hadoop.util.*;
 
 import java.util.Random;
 
-public class Testing {
+public class Testing extends Configured implements Tool {
 
   public static class TokenizerMapper
        extends Mapper<Object, Text, Text, IntWritable>{
@@ -67,7 +68,7 @@ public class Testing {
     }
   }
 
-  public static void main(String[] args) throws Exception {
+  public int run(String [] args) throws Exception{
     Path tempDir =
         new Path("/user/akhfa/temp-"+
             Integer.toString(new Random().nextInt(Integer.MAX_VALUE)));
@@ -98,5 +99,11 @@ public class Testing {
     sortJob.setSortComparatorClass(          // sort by decreasing freq
       LongWritable.DecreasingComparator.class);
     sortJob.waitForCompletion(true);
+
+    return 0;
+  }
+
+  public static void main(String[] args) throws Exception {
+    int res = ToolRunner.run(new Configuration(), new Testing(), args);
   }
 }
