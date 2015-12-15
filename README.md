@@ -2,7 +2,7 @@
 Repository ini dapat digunakan untuk melakukan perhitungan terhadap file dblp-short.xml. <br>
 
 ## Cara menjalankan
-Untuk menjalankannya, cukup download releasenya, extract, dan jalankan 
+Untuk menjalankannya, cukup download release sourcecodenya, extract, dan jalankan 
 ```
 ./runall.sh
 ```
