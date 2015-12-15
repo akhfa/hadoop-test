@@ -7,6 +7,24 @@ Untuk menjalankannya, cukup download release sourcecodenya, extract, dan jalanka
 ./runall.sh
 ```
 Daftar author dari yang publikasinya paling banyak akan muncul.<br>
+## Algoritma yang dipakai
+```
+Hal pertama yang dilakukan adalah melakukan parse terhadap nama Author.
+Setelah nama author didapatkan, maka dibuatlah sebuah kelas mapper untuk membuat pasangan key value <nama-author,1>
+Dibuatlah kelas reducer untuk menghitung jumlah nama-author yang sama. 
+  Misal: <nama-author,[1,1,1,1,1]>  =>  <nama-author,5>
+Setelah semua nama-author diketahui nilainya, kemudian dilakukan shorting 
+  dari nama-author yang paling banyak muncul
+```
+
+## Masalah
+Masalah yang muncul ketika membuat program ini adalah tidak dapat melakukan 2 job sekaligus, dan masih belum diketahui dimana permasalahannya. Hal ini menyebabkan limit 5 author terbanyak tidak dapat dimunculkan, dan harus memunculkan semua author sekaligus.<br>
+Karena permasalahan ini juga, maka dibuatlah 2 buah file hadoop yang masing - masing file menjalankan job yang berbeda.<br>
+File pertama, AuthorCounter.java hanya berfungsi untuk melakukan counting pada file input.<br>
+File kedua, Order.java hanya berfungsi untuk melakukan ordering dari author yang memiliki publikasi paling banyak.<br>
+Hasil kompilasi kedua file tersebut dijalankan dengan script runall.sh<br>
+
+## Hasil eksekusi
 Berikut contoh hasil eksekusi untuk 2 file dblp-short.xml.
 ```
 36      Christoph Meinel
@@ -125,22 +143,6 @@ real    0m48.075s
 user    0m21.419s
 sys     0m1.210s
 ```
-## Algoritma yang dipakai
-```
-Hal pertama yang dilakukan adalah melakukan parse terhadap nama Author.
-Setelah nama author didapatkan, maka dibuatlah sebuah kelas mapper untuk membuat pasangan key value <nama-author,1>
-Dibuatlah kelas reducer untuk menghitung jumlah nama-author yang sama. 
-  Misal: <nama-author,[1,1,1,1,1]>  =>  <nama-author,5>
-Setelah semua nama-author diketahui nilainya, kemudian dilakukan shorting 
-  dari nama-author yang paling banyak muncul
-```
-
-## Masalah
-Masalah yang muncul ketika membuat program ini adalah tidak dapat melakukan 2 job sekaligus, dan masih belum diketahui dimana permasalahannya. Oleh karena itu, dibuatlah 2 buah file hadoop yang masing - masing file menjalankan job yang berbeda.<br>
-File pertama, AuthorCounter.java hanya berfungsi untuk melakukan counting pada file input.<br>
-File kedua, Order.java hanya berfungsi untuk melakukan ordering dari author yang memiliki publikasi paling banyak.<br>
-Hasil kompilasi kedua file tersebut dijalankan dengan script runall.sh
-
 
 #### Catatan
 Hanya dapat dijalankan di lingkungan LABTEK V
