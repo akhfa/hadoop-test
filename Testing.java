@@ -32,9 +32,9 @@ public class Testing extends Configured implements Tool {
   }
 
   public static class TokenizerMapper
-       extends Mapper<Object, Text, Text, IntWritable>{
+       extends Mapper<Object, Text, Text, LongWritable>{
 
-    private final static IntWritable one = new IntWritable(1);
+    private final static LongWritable one = new LongWritable(1);
     private Text word = new Text();
 
     public void map(Object key, Text value, Context context
@@ -48,14 +48,14 @@ public class Testing extends Configured implements Tool {
   }
 
   public static class IntSumReducer
-       extends Reducer<Text,IntWritable,Text,IntWritable> {
-    private IntWritable result = new IntWritable();
+       extends Reducer<Text,LongWritable,Text,LongWritable> {
+    private LongWritable result = new LongWritable();
 
-    public void reduce(Text key, Iterable<IntWritable> values,
+    public void reduce(Text key, Iterable<LongWritable> values,
                        Context context
                        ) throws IOException, InterruptedException {
       int sum = 0;
-      for (IntWritable val : values) {
+      for (LongWritable val : values) {
         sum += val.get();
       }
       result.set(sum);
@@ -86,7 +86,7 @@ public class Testing extends Configured implements Tool {
     job.setCombinerClass(IntSumReducer.class);
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(IntWritable.class);
+    job.setOutputValueClass(LongWritable.class);
     job.setOutputFormatClass(SequenceFileOutputFormat.class);
     //job.setOutputValueGroupingComparator(Class);
     // job.setSortComparatorClass(
