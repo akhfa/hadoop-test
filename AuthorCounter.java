@@ -32,12 +32,18 @@ public class AuthorCounter extends Configured implements Tool {
 
       for(String line : lines)
       {
-        if(line.contains("author"))
+        if(line.contains("<author>") && line.contains("</author>"))
         {
             String author = line.substring(8, line.indexOf("</a"));
             word.set(author);
             context.write(word, one);
         }
+      	else if(line.contains("<author>"))
+      	{
+                  String author = line.substring(8);
+                  word.set(author);
+                  context.write(word, one);
+      	}
       }
     }
   }
