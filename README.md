@@ -144,5 +144,10 @@ user    0m21.419s
 sys     0m1.210s
 ```
 
+## Referensi
+http://svn.apache.org/viewvc/hadoop/common/trunk/hadoop-mapreduce-project/hadoop-mapreduce-examples/src/main/java/org/apache/hadoop/examples/Grep.java?revision=1203941&view=co<br>
+http://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html<br>
+http://www.tutorialspoint.com/hadoop/hadoop_command_reference.htm
+
 #### Catatan
 Hanya dapat dijalankan di lingkungan LABTEK V
