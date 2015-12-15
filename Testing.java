@@ -24,6 +24,13 @@ import java.util.Random;
 
 public class Testing extends Configured implements Tool {
 
+  private String inputPath;
+
+  public void setTheInputPath(String path)
+  {
+    inputPath = path;
+  }
+
   public static class TokenizerMapper
        extends Mapper<Object, Text, Text, IntWritable>{
 
@@ -70,8 +77,7 @@ public class Testing extends Configured implements Tool {
 
   public int run(String [] args) throws Exception{
     Path tempDir =
-        new Path("/user/akhfa/temp-"+
-            Integer.toString(new Random().nextInt(Integer.MAX_VALUE)));
+        new Path("/user/akhfa/temp");
 
     Configuration conf = new Configuration();
     Job job = Job.getInstance(conf, "word count");
@@ -88,16 +94,16 @@ public class Testing extends Configured implements Tool {
     FileOutputFormat.setOutputPath(job, tempDir);
     System.exit(job.waitForCompletion(true) ? 0 : 1);
 
-    Job sortJob = Job.getInstance(conf, "sort");
-    FileInputFormat.addInputPath(sortJob, tempDir);
-    sortJob.setInputFormatClass(SequenceFileInputFormat.class);
-    sortJob.setMapperClass(InverseMapper.class);
-    sortJob.setNumReduceTasks(1);                 // write a single file
-    FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
-    sortJob.setSortComparatorClass(          // sort by decreasing freq
-      LongWritable.DecreasingComparator.class);
-    sortJob.setJarByClass(Testing.class);
-    sortJob.waitForCompletion(true);
+    // Job sortJob = Job.getInstance(conf, "sort");
+    // FileInputFormat.addInputPath(sortJob, tempDir);
+    // sortJob.setInputFormatClass(SequenceFileInputFormat.class);
+    // sortJob.setMapperClass(InverseMapper.class);
+    // sortJob.setNumReduceTasks(1);                 // write a single file
+    // FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
+    // sortJob.setSortComparatorClass(          // sort by decreasing freq
+    //   LongWritable.DecreasingComparator.class);
+    // sortJob.setJarByClass(Testing.class);
+    // sortJob.waitForCompletion(true);
 
     return 0;
   }
