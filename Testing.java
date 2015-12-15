@@ -96,6 +96,7 @@ public class Testing extends Configured implements Tool {
     FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
     sortJob.setSortComparatorClass(          // sort by decreasing freq
       LongWritable.DecreasingComparator.class);
+    sortJob.setJarByClass(Testing.class);
     sortJob.waitForCompletion(true);
 
     return 0;
