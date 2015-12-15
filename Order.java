@@ -22,7 +22,7 @@ import org.apache.hadoop.util.*;
 
 import java.util.Random;
 
-public class Testing2 extends Configured implements Tool {
+public class Order extends Configured implements Tool {
 
   public int run(String [] args) throws Exception{
     Path tempDir =
@@ -37,13 +37,13 @@ public class Testing2 extends Configured implements Tool {
     FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
     sortJob.setSortComparatorClass(          // sort by decreasing freq
       LongWritable.DecreasingComparator.class);
-    sortJob.setJarByClass(Testing2.class);
+    sortJob.setJarByClass(Order.class);
     sortJob.waitForCompletion(true);
 
     return 0;
   }
 
   public static void main(String[] args) throws Exception {
-    int res = ToolRunner.run(new Configuration(), new Testing2(), args);
+    int res = ToolRunner.run(new Configuration(), new Order(), args);
   }
 }
