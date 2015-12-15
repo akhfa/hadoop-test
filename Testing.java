@@ -88,8 +88,7 @@ public class Testing extends Configured implements Tool {
     FileOutputFormat.setOutputPath(job, tempDir);
     System.exit(job.waitForCompletion(true) ? 0 : 1);
 
-    Job sortJob = new Job(conf);
-    sortJob.setJobName("grep-sort");
+    Job sortJob = Job.getInstance(conf, "sort");
     sortJob.setInputFormatClass(SequenceFileInputFormat.class);
     sortJob.setMapperClass(InverseMapper.class);
     sortJob.setNumReduceTasks(1);                 // write a single file
