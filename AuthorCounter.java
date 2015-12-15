@@ -63,18 +63,6 @@ public class AuthorCounter extends Configured implements Tool {
     }
   }
 
-  public static class CustomIntWritable extends IntWritable {
-    /** A decreasing Comparator optimized for IntWritable. */ 
-    public static class DecreasingComparator extends Comparator {
-        public int compare(WritableComparable a, WritableComparable b) {
-            return -super.compare(a, b);
-        }
-        public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {
-            return -super.compare(b1, s1, l1, b2, s2, l2);
-        }
-    }
-  }
-
   public int run(String [] args) throws Exception{
     Path tempDir =
         new Path("/user/akhfa/temp");
@@ -88,23 +76,10 @@ public class AuthorCounter extends Configured implements Tool {
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(LongWritable.class);
     job.setOutputFormatClass(SequenceFileOutputFormat.class);
-    //job.setOutputValueGroupingComparator(Class);
-    // job.setSortComparatorClass(
-    //   CustomIntWritable.DecreasingComparator.class);
+    
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, tempDir);
     System.exit(job.waitForCompletion(true) ? 0 : 1);
-
-    // Job sortJob = Job.getInstance(conf, "sort");
-    // FileInputFormat.addInputPath(sortJob, tempDir);
-    // sortJob.setInputFormatClass(SequenceFileInputFormat.class);
-    // sortJob.setMapperClass(InverseMapper.class);
-    // sortJob.setNumReduceTasks(1);                 // write a single file
-    // FileOutputFormat.setOutputPath(sortJob, new Path(args[1]));
-    // sortJob.setSortComparatorClass(          // sort by decreasing freq
-    //   LongWritable.DecreasingComparator.class);
-    // sortJob.setJarByClass(Testing.class);
-    // sortJob.waitForCompletion(true);
 
     return 0;
   }
