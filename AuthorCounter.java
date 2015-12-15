@@ -1,21 +1,4 @@
 import java.io.IOException;
-import java.util.StringTokenizer;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
-// import org.apache.hadoop.conf.Configuration;
-// import org.apache.hadoop.fs.Path;
-// import org.apache.hadoop.io.IntWritable;
-// import org.apache.hadoop.io.Text;
-// import org.apache.hadoop.mapreduce.Job;
-// import org.apache.hadoop.mapreduce.Mapper;
-// import org.apache.hadoop.mapreduce.Reducer;
-// import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-// import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
@@ -44,7 +27,6 @@ public class AuthorCounter extends Configured implements Tool {
 
     public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
-      //StringTokenizer itr = new StringTokenizer(value.toString());
       String file = value.toString();
       String [] lines = file.split("\n");
 
@@ -99,50 +81,5 @@ public class AuthorCounter extends Configured implements Tool {
 
   public static void main(String[] args) throws Exception {
     int res = ToolRunner.run(new Configuration(), new AuthorCounter(), args);
-  }
-
-  public ArrayList getAllAuthor (String filename)
-  {
-      ArrayList<String> allAuthor = new ArrayList<>();
-      // The name of the file to open.
-      String fileName = filename;
-
-      // This will reference one line at a time
-      String line = null;
-
-      try {
-          // FileReader reads text files in the default encoding.
-          FileReader fileReader = 
-              new FileReader(fileName);
-
-          // Always wrap FileReader in BufferedReader.
-          BufferedReader bufferedReader = 
-              new BufferedReader(fileReader);
-
-          while((line = bufferedReader.readLine()) != null) {
-              if(line.contains("author"))
-              {
-                  line = line.substring(8, line.indexOf("</a", 7));
-                  System.out.println(line);
-                  allAuthor.add(line);
-              }   
-          }   
-
-          // Always close files.
-          bufferedReader.close();         
-      }
-      catch(FileNotFoundException ex) {
-          System.out.println(
-              "Unable to open file '" + 
-              fileName + "'");                
-      }
-      catch(IOException ex) {
-          System.out.println(
-              "Error reading file '" 
-              + fileName + "'");                  
-          // Or we could just do this: 
-          // ex.printStackTrace();
-      }
-      return allAuthor;
   }
 }
