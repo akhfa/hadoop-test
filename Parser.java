@@ -1,10 +1,26 @@
-import java.io.*;
-public class Parser
-{
-    public static void main(String [] args)
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author akhfa
+ */
+public class Parser {
+
+    public ArrayList getAllAuthor (String filename)
     {
+        ArrayList<String> allAuthor = new ArrayList<>();
         // The name of the file to open.
-        String fileName = "dblp-short.xml";
+        String fileName = filename;
 
         // This will reference one line at a time
         String line = null;
@@ -22,7 +38,8 @@ public class Parser
                 if(line.contains("author"))
                 {
                     line = line.substring(8, line.indexOf("</a", 7));
-                    System.out.println(line);
+                    //System.out.println(line);
+                    allAuthor.add(line);
                 }   
             }   
 
@@ -41,5 +58,19 @@ public class Parser
             // Or we could just do this: 
             // ex.printStackTrace();
         }
+        return allAuthor;
     }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Parser parser = new Parser();
+        ArrayList Authors = parser.getAllAuthor("dblp-short.xml");
+        for(Object Author : Authors)
+        {
+            System.out.println(Author.toString());
+        }
+    }
+    
 }
